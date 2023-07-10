@@ -1,8 +1,7 @@
 <template>
-    <div>
-        <Nav></Nav>
+    <layout-wrapper>
         Labels Page
-    </div>
+    </layout-wrapper>
 </template>
 
 <script lang="ts">

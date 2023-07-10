@@ -1,29 +1,18 @@
-# bookkeeping-v2
+## bookkeeping-v2
 
-## Project setup
-```
-npm install
-```
+### node版本
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+- 16版本
 
-### Compiles and minifies for production
-```
-npm run build
-```
+### 项目遇到的问题 
 
-### Run your unit tests
-```
-npm run test:unit
-```
+##### 一、 用@引用 scss的问题
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- js中引入： @代表了 src 目录
+- iconfont.css：引入路径用'@/....'绝对路径
+- css里也可以用@引入
+  - 用~@引用， 代表src目录
+    -  `@import '~@/assets/style.scss';`
+  - 问题
+    - `@import url('~@/xxx.css')` 用@import url()只能引入css文件
+    - 要引入scss只能用 @import '~@/xxxx.scss', 不加url

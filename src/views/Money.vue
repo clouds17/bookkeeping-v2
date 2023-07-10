@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <Nav></Nav>
+    <layout-wrapper>
         Money Page
-    </div>
+    </layout-wrapper>
+   
 </template>
 
 <script lang="ts">
