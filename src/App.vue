@@ -10,6 +10,17 @@
   padding: 0;
   box-sizing: border-box;
 }
+a {
+  color: #333;
+  text-decoration: none;
+}
+li {
+  list-style: none;
+}
+input {
+  border: 0;
+  outline: none;
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

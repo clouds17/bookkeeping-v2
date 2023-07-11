@@ -23,7 +23,7 @@
     height: 100vh;
 }
 .content {
-    border: 1px solid skyblue;
+    // border: 1px solid skyblue;
     overflow: auto;
     flex-grow: 1;
 }

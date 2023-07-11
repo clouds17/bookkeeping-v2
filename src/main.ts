@@ -3,11 +3,13 @@ import App from './App.vue'
 import './registerServiceWorker'
 import router from './router'
 import store from './store'
+import SvgIcon from '@/components/SvgIcon.vue'
 import LayoutWrapper from '@/components/LayoutWrapper.vue'
 
 Vue.config.productionTip = false
 
 Vue.component('LayoutWrapper', LayoutWrapper)
+Vue.component('SvgIcon', SvgIcon)
 
 new Vue({
   router,
