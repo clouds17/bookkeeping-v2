@@ -14,13 +14,13 @@
 </template>
 
 <script lang="ts">
-    import x from '@/assets/icons/labels.svg';
-    import y from '@/assets/icons/money.svg';
-    import z from '@/assets/icons/statistics.svg';
-    console.log(x)
-    console.log(y)
-    console.log(z)
-    // /img/labels.c5b46c51.svg
+    // eslint-disable-next-line no-undef
+    let importAll = (requireContext: __WebpackModuleApi.RequireContext) => requireContext.keys().forEach(requireContext)
+    try {
+        importAll(require.context('../assets/icons', true, /\.svg$/));
+    } catch (error) {
+        console.log(error)
+    }
     export default {
     }
 </script>
