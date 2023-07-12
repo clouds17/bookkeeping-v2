@@ -78,3 +78,60 @@ button {
 // 这样的话就会逐层根据 #f2f2f2, 每层加深4%
 ```
 
+
+
+### TS的写法
+
+这是一段正常的js写法
+
+```
+<script>
+    export default {
+        name: 'Types',
+        data() {
+            return {
+                type: '-',  // '-'代表支出，'+'代表收入
+            }
+        },
+        methods: {
+            selectType(type) {
+                if (type !== '-' && type !== '+') {
+                    throw new Error('Type is unknown')
+                }
+                this.type = type
+            }
+        },
+    }
+</script>
+```
+
+用ts写如下：
+
+```
+<script lang="ts">
+    import { Vue, Component, Prop } from 'vue-property-decorator'
+
+    @Component
+    export default class Types extends Vue {
+        type = '-'; // '-'代表支出，'+'代表收入
+       
+        selectType(type: string) {
+            if (type !== '-' && type !== '+') {
+                throw new Error('Type is unknown')
+            }
+            this.type = type
+        }
+
+        // created
+        created() {
+            console.log('created')
+        }
+
+        // mounted
+        mounted() {
+            console.log('mounted')
+        }
+    }
+</script>
+```
+
