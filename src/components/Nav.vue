@@ -22,10 +22,11 @@
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/style/helper.scss';
 nav {
+    @extend %outerShadow;
     display: flex;
     flex-direction: row;
-    box-shadow: 0 0 3px rgba(0, 0, 0, .3);
     > .item {
         padding: 8px 0 4px;
         width: 33.3333%;
@@ -41,9 +42,9 @@ nav {
         }
         p { margin: 4px 0; }
         &.selected {
-            color: #318FEF;
+            color: $color-highlight;
             svg {
-                color: #318FEF;
+                color: $color-highlight;
             }
         }
     }
