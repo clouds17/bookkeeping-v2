@@ -105,7 +105,7 @@ button {
 </script>
 ```
 
-用ts写如下：
+用ts写如下：编译时如没报错，编译器会把它转成js运行
 
 ```
 <script lang="ts">
@@ -115,6 +115,13 @@ button {
     export default class Types extends Vue {
         type = '-'; // '-'代表支出，'+'代表收入
        
+       	@Prop(Number) xxx: number | undefined;
+       	@Prop(Number) yyy = 0;
+       	// Prop 告诉 Vue:  xxx 不是data 是 prop
+       	// Number 告诉 Vue: xxx 是Number类型 （运行时的类型）
+       	// xxx: 属性名
+       	// number | undefined 告诉 TS: xxx 的类型 （编译时的类型，用于TS转JS时）
+       	
         selectType(type: string) {
             if (type !== '-' && type !== '+') {
                 throw new Error('Type is unknown')
@@ -129,9 +136,50 @@ button {
 
         // mounted
         mounted() {
-            console.log('mounted')
+        	if (this.xxx === undefined) {
+        	
+        	} else {
+				 console.log(this.xxx)
+        	} 
         }
     }
 </script>
 ```
+
+上面ts的这种方式也可以变成js
+
+```
+<script >
+    import { Vue, Component, Prop } from 'vue-property-decorator'
+
+    @Component
+    export default class Types extends Vue {
+        type = '-'; // '-'代表支出，'+'代表收入
+       
+       	@Prop(Number) xxx;
+        selectType(type) {
+            if (type !== '-' && type !== '+') {
+                throw new Error('Type is unknown')
+            }
+            this.type = type
+        }
+
+        // created
+        created() {
+            console.log('created')
+        }
+
+        // mounted
+        mounted() {
+        	if (this.xxx === undefined) {
+        	
+        	} else {
+				 console.log(this.xxx)
+        	} 
+        }
+    }
+</script>
+```
+
+结论： TS这样把script标签上的lang="ts"去掉，代码里的:类型去掉，它就是js
 

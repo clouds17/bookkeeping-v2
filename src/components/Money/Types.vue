@@ -14,6 +14,8 @@
 </template>
 
 <script lang="ts">
+    /* eslint-disable */ 
+
     import { Vue, Component, Prop } from 'vue-property-decorator'
 
     @Component
@@ -21,21 +23,12 @@
         type = '-'; // '-'代表支出，'+'代表收入
        
         selectType(type: string) {
-            if (type !== '-' && type !== '+') {
+            if (type !== '-' && type !== '+') { 
                 throw new Error('Type is unknown')
             }
             this.type = type
         }
 
-        // created
-        created() {
-            console.log('created')
-        }
-
-        // mounted
-        mounted() {
-            console.log('mounted')
-        }
     }
 </script>
 
