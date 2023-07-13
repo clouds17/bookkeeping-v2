@@ -183,3 +183,26 @@ button {
 
 结论： TS这样把script标签上的lang="ts"去掉，代码里的:类型去掉，它就是js
 
+> 问题： 方法传参的时候要指定参数的类型,那么 event 它是什么类型呢（它是个对象，要写对象的类型）
+
+```
+// 事件有鼠标事件，UI事件，键盘事件，用户事件等
+inputContent(event: MouseEvent) {
+	this.output += event.target.textContent;
+}
+
+// 此时ts会报错，说event不一定有target属性, event.target不一定有textContent属性
+inputContent(event: MouseEvent) {
+	if (event.target) {
+		if (event.target.textContent) {
+			this.output += event.target.textContent;
+		}
+	}
+}
+// 这样就不会有问题了，但通常情况会用强制指定类型
+const button = (event.target as HTMLButtonElement);
+// 把 event.target 强制指定为一个按钮，那么按钮就一定会有textContent
+// 注意： 一定要有括号
+this.output += button.textContent
+```
+
