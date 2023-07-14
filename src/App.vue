@@ -14,7 +14,7 @@
   line-height: 1.5;
   font-size: 15px;
   font-family: $font-kai;
-  background-color: #fff;
+  background-color: #f5f5f5;
   color: #333;
 }
 

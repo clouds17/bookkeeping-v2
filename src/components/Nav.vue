@@ -27,6 +27,7 @@ nav {
     @extend %outerShadow;
     display: flex;
     flex-direction: row;
+    background: #fff;
     > .item {
         padding: 8px 0 4px;
         width: 33.3333%;

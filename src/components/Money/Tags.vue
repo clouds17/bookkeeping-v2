@@ -40,7 +40,7 @@
                 if (this.dataSource.includes(name as string)) {
                     window.alert('当前已有此标签');
                 } else {
-                    this.$emit('update:dataSource', [...this.dataSource, name])
+                    this.$emit('update:dataSource', name)
                 }
            }
         }
@@ -48,6 +48,8 @@
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/style/helper.scss';
+
 .tags {
     font-size: 14px;
     padding: 16px;
@@ -71,7 +73,7 @@
             margin-bottom: 10px;
 
             &.selectd {
-                background: #318FEF;
+                background: $color-highlight;
                 color: #fff;
             }
         }

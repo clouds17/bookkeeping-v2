@@ -111,7 +111,7 @@ button {
 <script lang="ts">
     import { Vue, Component, Prop } from 'vue-property-decorator'
 
-	type Record = {
+	type RecordItem = {
 		tags: string[],
 		notes: string,
 		type: string,
@@ -134,7 +134,7 @@ button {
        	// number | undefined 告诉 TS: xxx 的类型 （编译时的类型，用于TS转JS时）
        	
        	// 如果要声明对象 record， 里面有四个参数，要先声明它的类型
-		record: Record = {
+		record: RecordItem = {
 			tags: [],
 			notes: '',
 			type: '-',
@@ -232,3 +232,29 @@ const button = (event.target as HTMLButtonElement);
 this.output += button.textContent
 ```
 
+
+
+- 如果要声明一个全局的类型，可以在src里建一个custom.d.ts文件
+
+```
+// custom.d.ts文件
+
+type RecordItem = {
+    tags: string[],
+    notes: string,
+    type: string,
+    amount: number,
+    createdAt: Date
+}
+// 那么在全局的ts文件下都能用这个类型
+```
+
+> 如果文件里用到上面RecordItem类型还是标红
+>
+> 在 `eslintrc.js` 中加一行配置：
+>
+> ```
+>   "globals": { "RecordItem": true }
+> ```
+>
+> 

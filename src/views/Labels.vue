@@ -1,17 +1,71 @@
 <template>
     <layout-wrapper>
-       
-            
-        Labels Page
+        <ol class="tags">
+            <li v-for="(tag, index) in tagList" :key="index">
+                <span>{{ tag }}</span>
+                <SvgIcon name="right"></SvgIcon>
+            </li>
+        </ol>
+        <div class="createTag-wrapper">
+            <button class="createTag" @click="createTag">新建标签</button>
+        </div>
+        
     </layout-wrapper>
 </template>
 
 <script lang="ts">
-    
-    export default {
+    import { Vue, Component } from 'vue-property-decorator';
+    import tagListModel from '@/models/tagListModel';
+    tagListModel.fetch();
+
+    @Component
+    export default class Labels extends Vue {
+        tagList = tagListModel.data;
+
+        createTag() {
+            const name = window.prompt('请输入标签名');
+            if (name === '') {
+             window.alert('标签名不能为空');
+            } else {
+                tagListModel.create(name!);
+            }
+        }
+
     }
 </script>
 
 <style lang="scss" scoped>
+@import '~@/assets/style/helper.scss';
 
+.tags {
+    background-color: #fff;
+    font-size: 16px;
+    padding-left: 16px;
+    max-height: calc(100% - 83px);
+    overflow: auto;
+    > li {
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #e6e6e6;
+
+        svg {
+            color: #707070;
+            margin-right: 16px;
+        }
+    }
+}
+.createTag {
+    background-color: $color-highlight;
+    color: #fff;
+    border-radius: 4px;
+    padding: 8px 18px;
+
+    &-wrapper {
+        text-align: center;
+        padding: 20px;
+        margin-top: 10px;
+    }
+}
 </style>
