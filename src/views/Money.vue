@@ -1,6 +1,6 @@
 <template>
     <layout-wrapper class-prefix="layout">
-        <tags></tags>
+        <tags :data-source.sync="tags"></tags>
         <notes></notes>
         <types></types>
         <number-pad></number-pad>
@@ -9,7 +9,7 @@
     </layout-wrapper>
 </template>
 
-<script lang="ts">
+<script >
 import Tags from '@/components/Money/Tags.vue';
 import Notes from '@/components/Money/Notes.vue';
 import Types from '@/components/Money/Types.vue';
@@ -21,7 +21,13 @@ export default {
         Notes,
         Types,
         NumberPad
-    }
+    },
+    data() {
+        return {
+            tags: ['衣', '食', '住', '行', '喝']
+        }
+    },
+    
 }
 </script>
 

@@ -151,8 +151,12 @@ button {
 ```
 <script >
     import { Vue, Component, Prop } from 'vue-property-decorator'
-
-    @Component
+	import Types from '@/components/Money/Types.vue';
+    @Component({
+    	components: {
+            Types,
+        },
+    })
     export default class Types extends Vue {
         type = '-'; // '-'代表支出，'+'代表收入
        
