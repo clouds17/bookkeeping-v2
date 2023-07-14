@@ -29,6 +29,7 @@
             } else {
                 this.selectdTags.push(tag)
             }
+            this.$emit('update:value', this.selectdTags)
         }
 
         createTag() {

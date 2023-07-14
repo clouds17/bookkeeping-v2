@@ -2,11 +2,11 @@
     <div>
         <ul class="types">
             <li 
-                :class="type === '-' && 'selected'"
+                :class="value === '-' && 'selected'"
                 @click="selectType('-')"    
             >支出</li>
             <li 
-                :class="type === '+' && 'selected'"
+                :class="value === '+' && 'selected'"
                 @click="selectType('+')"    
             >收入</li>
         </ul>
@@ -20,13 +20,13 @@
 
     @Component
     export default class Types extends Vue {
-        type = '-'; // '-'代表支出，'+'代表收入
+        @Prop() readonly value!: string;
        
         selectType(type: string) {
             if (type !== '-' && type !== '+') { 
                 throw new Error('Type is unknown')
             }
-            this.type = type
+            this.$emit('update:value', type)
         }
 
     }

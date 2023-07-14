@@ -13,7 +13,7 @@
             <button @click="inputContent">7</button>
             <button @click="inputContent">8</button>
             <button @click="inputContent">9</button>
-            <button class="ok">OK</button>
+            <button @click="confirmContent" class="ok">OK</button>
             <button @click="inputContent" class="zero">0</button>
             <button @click="inputContent">.</button>
         </div>
@@ -21,10 +21,11 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from 'vue-property-decorator';
+    import { Vue, Component, Prop } from 'vue-property-decorator';
     @Component
     export default class NumberPad extends Vue {
-        output = '0';
+        @Prop() readonly value!: number;
+        output = this.value.toString();
         // 输入
         inputContent(event: MouseEvent) {
             // 强制转换类型为button,这样就一定会有 textContent 属性
@@ -50,14 +51,20 @@
         // 删除
         deleteContent() {
             if (this.output?.length === 1) {
-                this.output = '0'
+                this.output = '0';
             }
             this.output = this.output?.slice(0, -1);
         }
 
         // 清除
         clearContent() {
-            this.output = '0'
+            this.output = '0';
+        }
+
+        confirmContent() {
+            this.$emit('update:value', this.output);
+            this.$emit('submit', this.output);
+            this.output = '0';
         }
     }
 </script>
