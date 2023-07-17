@@ -6,7 +6,7 @@
                 :key="index"
                 :class="selectdTags.includes(tag) && 'selectd'"
                 @click="taggle(tag)"
-                >{{ tag }}</li>
+                >{{ tag.name }}</li>
         </ul>
         <div class="new">
             <button @click="createTag">新增标签</button>
@@ -16,13 +16,14 @@
 
 <script lang="ts">
     import { Vue, Component, Prop } from 'vue-property-decorator';
+    import tagListModel from '@/models/tagListModel';
     @Component
     export default class Tags extends Vue {
         // readonly: 只读
-        @Prop(Array) readonly dataSource: string[] | undefined;
-        selectdTags: string[] = [];
+        @Prop(Array) readonly dataSource: tag[] | undefined;
+        selectdTags: tag[] = [];
 
-        taggle(tag: string) {
+        taggle(tag: tag) {
             const index = this.selectdTags.indexOf(tag)
             if (index > -1) {
                 this.selectdTags.splice(index, 1)
@@ -33,16 +34,13 @@
         }
 
         createTag() {
-           const name =  window.prompt('请输入标签名');
-           if (name === '') {
+            const name = window.prompt('请输入标签名');
+            if (name === null) return
+            if (name === '') {
              window.alert('标签名不能为空');
-           } else if (this.dataSource) {
-                if (this.dataSource.includes(name as string)) {
-                    window.alert('当前已有此标签');
-                } else {
-                    this.$emit('update:dataSource', name)
-                }
-           }
+            } else {
+                tagListModel.create(name!);
+            }
         }
     }
 </script>

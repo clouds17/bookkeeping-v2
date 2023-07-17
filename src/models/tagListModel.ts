@@ -1,10 +1,6 @@
 const localStorageKeyName = 'tagList';
-type TagListType = {
-    data: string[]
-    fetch: () => string[]
-    create: (name: string) => string
-    save: () => void
-}
+
+
 const tagListModel:TagListType = {
     data: [],
     fetch() {
@@ -12,10 +8,11 @@ const tagListModel:TagListType = {
         return this.data;
     },
     create(name) {
-        if (this.data.includes(name)) {
+        const names = this.data.map(item => item.name)
+        if (names.includes(name)) {
             window.alert('当前已有此标签');
         } else {
-            this.data.push(name);
+            this.data.push({id: name, name});
             this.save();
         }
         return name

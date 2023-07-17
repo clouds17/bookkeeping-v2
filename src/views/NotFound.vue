@@ -24,5 +24,6 @@
     margin-top: 30px;
     color: #568fde;
     text-decoration: none;
+    display: block;
 }
 </style>

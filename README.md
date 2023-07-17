@@ -133,6 +133,10 @@ button {
        	// xxx: 属性名
        	// number | undefined 告诉 TS: xxx 的类型 （编译时的类型，用于TS转JS时）
        	
+       	@Prop({default: '字段名'}) fieldName!: string;
+       	// 引入fieldName，默认值是字段名
+       	// 变量名后加感叹号是告诉TS，我不会为空，以免TS报错
+       	
        	// 如果要声明对象 record， 里面有四个参数，要先声明它的类型
 		record: RecordItem = {
 			tags: [],

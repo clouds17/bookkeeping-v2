@@ -1,19 +1,23 @@
 <template>
     <div>
         <label class="notes">
-            <span class="name">备注：</span>
+            <span class="name">{{ fieldName }}：</span>
             <input type="text" 
                 v-model="value" 
-                placeholder="在这里添加备注">
+                :placeholder="placeholder">
         </label>
     </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator';
+import { Vue, Component, Watch, Prop } from 'vue-property-decorator';
 
     @Component
     export default class Notes extends Vue {
+
+        @Prop({ required: true }) fieldName!: string;
+        @Prop() placeholder?: string;
+
         value = ''
 
         @Watch('value')

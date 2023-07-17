@@ -8,7 +8,7 @@ module.exports = {
     'eslint:recommended',
     '@vue/typescript/recommended'
   ],
-  "globals": { "RecordItem": true },
+  "globals": { "RecordItem": true, "tag": true },
   parserOptions: {
     ecmaVersion: 2020
   },

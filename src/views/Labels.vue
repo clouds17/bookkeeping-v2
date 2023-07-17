@@ -1,11 +1,15 @@
 <template>
     <layout-wrapper>
-        <ol class="tags">
-            <li v-for="(tag, index) in tagList" :key="index">
-                <span>{{ tag }}</span>
+        <div class="tags">
+            <router-link class="tag" 
+                v-for="(tag, index) in tagList" 
+                :key="index"
+                :to="`/labels/edit/${tag.id}`"
+            >
+                <span>{{ tag.name }}</span>
                 <SvgIcon name="right"></SvgIcon>
-            </li>
-        </ol>
+            </router-link>
+        </div>
         <div class="createTag-wrapper">
             <button class="createTag" @click="createTag">新建标签</button>
         </div>
@@ -24,6 +28,7 @@
 
         createTag() {
             const name = window.prompt('请输入标签名');
+            if (name === null) return
             if (name === '') {
              window.alert('标签名不能为空');
             } else {
@@ -43,7 +48,7 @@
     padding-left: 16px;
     max-height: calc(100% - 83px);
     overflow: auto;
-    > li {
+    > .tag {
         min-height: 44px;
         display: flex;
         align-items: center;
