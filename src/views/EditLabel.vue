@@ -6,23 +6,27 @@
         </nav>
         <main>
             <div class="item">
-                <notes 
+                <FromItem 
                     field-name="标签名" 
                     placeholder="请输入标签名"
                     @update:value = "onUpdateNotes"
-                ></notes>
+                ></FromItem>
             </div>
         </main>
+        <default-btn @click.native="deleteTag">删除标签</default-btn>
     </layout-wrapper>
 </template>
 
 <script lang="ts">
     import { Vue, Component } from 'vue-property-decorator';
-    import Notes from '@/components/Money/Notes.vue';
+    import FromItem from '@/components/Money/FromItem.vue';
+    import DefaultBtn from '@/components/DefaultBtn.vue';
+
     import tagListModel from '@/models/tagListModel';
     @Component({
         components: {
-            Notes
+            FromItem,
+            DefaultBtn
         }
     })
     export default class EditLabel extends Vue {
@@ -42,6 +46,10 @@
         onUpdateNotes(value: string) {
             console.log(value)
         }
+
+        deleteTag() {
+            console.log('点击了删除')
+        }
     }
     
 </script>
@@ -52,7 +60,7 @@ nav {
     @extend %outerShadow;
     text-align: center;
     position: relative;
-    padding: 10px 25px;
+    padding: 12px 25px;
     font-size: 15px;
     color: #333;
     background-color: #fff;

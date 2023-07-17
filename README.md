@@ -262,3 +262,34 @@ type RecordItem = {
 > ```
 >
 > 
+
+
+
+
+
+### 小知识点
+
+一： @click.native
+
+- 子组件传递一个click呀，mouse事件给父组件
+
+  ```
+  // 子组件 Button.vue
+  <button @click="$emit('click', $event)">....</button>
+  
+  // 父组件
+  <Button @click="clickEvent">
+  ```
+
+- 可以省略子组件的@click="......."
+
+  ```
+  // 子组件 Button.vue
+  <button>.....</button>
+  
+  // 父组件
+  <Button @click.native="clickEvent">
+  ```
+
+- 上面两个表示的意思是一样的                                                                                
+

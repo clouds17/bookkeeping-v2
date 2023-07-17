@@ -1,11 +1,11 @@
 <template>
     <layout-wrapper class-prefix="layout">
         <tags :data-source.sync="dataSource"  @update:value="onUpdateTags"></tags>
-        <notes 
+        <FromItem 
             field-name="备注" 
             placeholder="在这里输入备注"
             @update:value = "onUpdateNotes"
-        ></notes>
+        ></FromItem>
         <types :value.sync="record.type"></types>
         <number-pad :value.sync="record.amount" @submit="savaRecord"></number-pad>
         
@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import Tags from '@/components/Money/Tags.vue';
-import Notes from '@/components/Money/Notes.vue';
+import FromItem from '@/components/Money/FromItem.vue';
 import Types from '@/components/Money/Types.vue';
 import NumberPad from '@/components/Money/NumberPad.vue';
 import { Vue, Component, Watch } from 'vue-property-decorator';
@@ -27,7 +27,7 @@ const tagList = tagListModel.fetch();
 @Component({
     components: {
         Tags,
-        Notes,
+        FromItem,
         Types,
         NumberPad
     }
