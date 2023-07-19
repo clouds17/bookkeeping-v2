@@ -19,7 +19,7 @@
     import { Vue, Component } from 'vue-property-decorator';
     import DefaultBtn from '@/components/DefaultBtn.vue';
     import tagListModel from '@/models/tagListModel';
-    tagListModel.fetch();
+  
 
     @Component({
         components: { 
@@ -28,7 +28,8 @@
     })
    
     export default class Labels extends Vue {
-        tagList = tagListModel.data;
+        tagList = window.tagList;
+        
 
         createTag() {
             const name = window.prompt('请输入标签名');
@@ -36,6 +37,7 @@
             if (name === '') {
              window.alert('标签名不能为空');
             } else {
+                console.log(this.tagList)
                 tagListModel.create(name!);
             }
         }

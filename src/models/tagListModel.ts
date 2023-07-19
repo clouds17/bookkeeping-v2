@@ -16,6 +16,7 @@ const tagListModel:TagListType = {
         } else {
             const id = createId().toString();
             this.data.push({id, name});
+            window.tagList = this.data;
             this.save();
         }
         return name

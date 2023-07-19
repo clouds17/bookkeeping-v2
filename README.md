@@ -293,3 +293,13 @@ type RecordItem = {
 
 - 上面两个表示的意思是一样的                                                                                
 
+
+
+二： ts给window添加全局属性
+
+```
+interface Window {
+	tagList: tag[]
+}
+```
+

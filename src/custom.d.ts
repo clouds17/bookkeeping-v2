@@ -3,7 +3,7 @@ type RecordItem = {
     notes: string,
     type: string,
     amount: number,
-    createdAt: Date
+    createdAt?: Date
 }
 
 type tag = {
@@ -18,4 +18,8 @@ type TagListType = {
     update: (id: string, name: string) => string,
     save: () => void,
     remove: (id: string) => boolean
+}
+
+interface Window {
+    tagList: tag[]
 }
