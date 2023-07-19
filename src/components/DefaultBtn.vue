@@ -1,6 +1,6 @@
 <template>
     <div class="createTag-wrapper">
-        <button class="createTag" >
+        <button class="createTag" @click="$emit('click', $event)">
             <slot></slot>
         </button>
     </div>

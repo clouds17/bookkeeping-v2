@@ -10,7 +10,7 @@
                 <SvgIcon name="right"></SvgIcon>
             </router-link>
         </div>
-        <default-btn @click.native="createTag">新建标签</default-btn>
+        <default-btn @click="createTag">新建标签</default-btn>
         
     </layout-wrapper>
 </template>

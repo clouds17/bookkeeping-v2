@@ -12,8 +12,10 @@ type tag = {
 }
 
 type TagListType = {
-    data: tag[]
-    fetch: () => tag[]
-    create: (name: string) => string
-    save: () => void
+    data: tag[],
+    fetch: () => tag[],
+    create: (name: string) => string,
+    update: (id: string, name: string) => string,
+    save: () => void,
+    remove: (id: string) => boolean
 }

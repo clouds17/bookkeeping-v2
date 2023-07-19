@@ -4,7 +4,7 @@
         <FromItem 
             field-name="备注" 
             placeholder="在这里输入备注"
-            @update:value = "onUpdateNotes"
+            :value.sync="record.notes"
         ></FromItem>
         <types :value.sync="record.type"></types>
         <number-pad :value.sync="record.amount" @submit="savaRecord"></number-pad>
@@ -50,7 +50,13 @@ export default class Money extends Vue{
     }
     savaRecord() {
         this.recordList.push(recordListModel.clone(this.record));
-
+        this.record = {
+            tags: [],
+            notes: '',
+            type: '-',
+            amount: 0,
+            createdAt: new Date()
+        }
     }
 
     @Watch('recordList')

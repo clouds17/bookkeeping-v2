@@ -1,19 +1,20 @@
 <template>
     <layout-wrapper>
         <nav>
-            <SvgIcon name="right"></SvgIcon>
+            <SvgIcon name="right" @click.native="goBack"></SvgIcon>
             <span>编辑标签</span>
         </nav>
         <main>
             <div class="item">
                 <FromItem 
+                    :value="tag.name"
+                    @update:value="updateTag"
                     field-name="标签名" 
                     placeholder="请输入标签名"
-                    @update:value = "onUpdateNotes"
                 ></FromItem>
             </div>
         </main>
-        <default-btn @click.native="deleteTag">删除标签</default-btn>
+        <default-btn @click="deleteTag">删除标签</default-btn>
     </layout-wrapper>
 </template>
 
@@ -30,25 +31,40 @@
         }
     })
     export default class EditLabel extends Vue {
+
+        tag: tag = {
+            id: '',
+            name: ''
+        };
+ 
         created() {
             const id = this.$route.params.id
             tagListModel.fetch()
             const tags = tagListModel.data;
             const tag = tags.find(item => item.id === id)
             if (tag) {
-                console.log(tag);
+                this.tag = tag
             } else {
                 this.$router.replace('/404')
             }
             
         }
 
-        onUpdateNotes(value: string) {
-            console.log(value)
+        updateTag(name: string) {
+            if (this.tag) {
+                tagListModel.update(this.tag.id, name)
+            }
         }
 
         deleteTag() {
-            console.log('点击了删除')
+            if (this.tag) {
+                tagListModel.remove(this.tag.id)
+                this.goBack()
+            }
+        }
+
+        goBack() {
+            this.$router.back()
         }
     }
     
