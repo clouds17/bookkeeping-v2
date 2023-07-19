@@ -49,7 +49,7 @@ export default class Money extends Vue{
         this.record.notes = value;
     }
     savaRecord() {
-        this.recordList.push(recordListModel.clone(this.record));
+        recordListModel.create(this.record)
         this.record = {
             tags: [],
             notes: '',
@@ -61,7 +61,7 @@ export default class Money extends Vue{
 
     @Watch('recordList')
     onRecordListChange() {
-        recordListModel.save(this.recordList)
+        recordListModel.save()
     }
 }
 </script>
