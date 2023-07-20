@@ -20,6 +20,10 @@ type TagListType = {
     remove: (id: string) => boolean 
 }
 
+type state = {
+    recordList: RecordItem[]
+}
+
 interface Window {
     tagList: tag[],
     createTag: (name: string) => void;

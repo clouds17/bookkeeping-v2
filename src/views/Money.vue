@@ -19,9 +19,8 @@ import FromItem from '@/components/Money/FromItem.vue';
 import Types from '@/components/Money/Types.vue';
 import NumberPad from '@/components/Money/NumberPad.vue';
 import { Vue, Component, Watch } from 'vue-property-decorator';
-import recordListModel from '@/models/recordListModel';
+import { mapState, mapMutations, mapActions } from 'vuex';
 
-const recordList = recordListModel.fetch();
 
 @Component({
     components: {
@@ -29,16 +28,19 @@ const recordList = recordListModel.fetch();
         FromItem,
         Types,
         NumberPad
-    }
+    },
+    
 })
 export default class Money extends Vue{
-    recordList = recordList;
     record: RecordItem = {
         tags: [],
         notes: '',
         type: '-',
         amount: 0,
         createdAt: new Date()
+    }
+    created() {
+        this.$store.commit('fetchRecord')
     }
     onUpdateTags(value: string[]) {
         this.record.tags = value;
@@ -47,7 +49,7 @@ export default class Money extends Vue{
         this.record.notes = value;
     }
     savaRecord() {
-        recordListModel.create(this.record)
+        this.$store.dispatch('createRecord_actions', this.record)
         this.record = {
             tags: [],
             notes: '',
@@ -55,11 +57,7 @@ export default class Money extends Vue{
             amount: 0,
             createdAt: new Date()
         }
-    }
-
-    @Watch('recordList')
-    onRecordListChange() {
-        recordListModel.save()
+        
     }
 }
 </script>

@@ -2,7 +2,7 @@
     <div class="tags">
         <ul class="current">
             <li 
-                v-for="(tag, index) in dataSource" 
+                v-for="(tag, index) in tagList" 
                 :key="index"
                 :class="selectdTags.includes(tag) && 'selectd'"
                 @click="taggle(tag)"
@@ -15,12 +15,22 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component, Prop } from 'vue-property-decorator';
-    import tagListModel from '@/models/tagListModel';
-    @Component
-    export default class Tags extends Vue {
-        dataSource = window.tagList;
+    import { Component, Prop, Mixins } from 'vue-property-decorator';
+    import CommonMixins from "@/mixins/mixin";
+    @Component({
+        computed: {
+            
+        }
+    })
+    export default class Tags extends Mixins(CommonMixins) {
         selectdTags: tag[] = [];
+        get tagList() {
+            return this.$store.state.tagList.tagList;
+        }
+
+        created() {
+            this.$store.commit('fetchTag')
+        }
 
         taggle(tag: tag) {
             const index = this.selectdTags.indexOf(tag)
@@ -32,15 +42,7 @@
             this.$emit('update:value', this.selectdTags)
         }
 
-        createTag() {
-            const name = window.prompt('请输入标签名');
-            if (name === null) return
-            if (name === '') {
-             window.alert('标签名不能为空');
-            } else {
-                tagListModel.create(name!);
-            }
-        }
+        
     }
 </script>
 

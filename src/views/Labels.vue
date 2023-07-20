@@ -16,30 +16,22 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from 'vue-property-decorator';
+    import { Vue, Component, Mixins } from 'vue-property-decorator';
     import DefaultBtn from '@/components/DefaultBtn.vue';
-    import tagListModel from '@/models/tagListModel';
-  
+    import CommonMixins from "@/mixins/mixin";
 
     @Component({
         components: { 
             DefaultBtn
-        }
+        },
     })
    
-    export default class Labels extends Vue {
-        tagList = window.tagList;
-        
+    export default class Labels extends Mixins(CommonMixins) {
 
-        createTag() {
-            const name = window.prompt('请输入标签名');
-            if (name === null) return
-            if (name === '') {
-             window.alert('标签名不能为空');
-            } else {
-                window.createTag(name)
-            }
+        get tagList() {
+            return this.$store.state.tagList.tagList;
         }
+        
 
     }
 </script>

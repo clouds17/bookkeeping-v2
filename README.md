@@ -303,3 +303,53 @@ interface Window {
 }
 ```
 
+三：vue+ts里的computed属性
+
+```
+export default class Labels extends Vue {
+        get tagList() {
+            return this.$store.state.tagList.tagList;
+        }
+}
+```
+
+四：mixins混入写法
+
+- 创建mixins文件
+
+```
+// src/mixins/mixin.ts
+
+import store from "@/store";
+import { Component, Vue } from "vue-property-decorator";
+@Component
+export default class CommonMixins extends Vue{
+	isShow = true
+    createTag() {
+        const name = window.prompt('请输入标签名');
+        if (name === null) return
+        if (name === '') {
+         window.alert('标签名不能为空');
+        } else {
+            store.dispatch('createTag_actons', name);
+        }
+    }
+}
+```
+
+- 引用mixins的文件
+
+```
+import { Vue, Component, Mixins } from 'vue-property-decorator';
+import CommonMixins from "@/mixins/mixin";
+
+@Component
+   
+export default class Labels extends Mixins(CommonMixins) {
+	created() {
+		console.log(this.isShow)
+		this.createTag()
+	}
+}
+```
+

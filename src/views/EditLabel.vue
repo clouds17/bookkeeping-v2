@@ -23,24 +23,28 @@
     import FromItem from '@/components/Money/FromItem.vue';
     import DefaultBtn from '@/components/DefaultBtn.vue';
 
-    import tagListModel from '@/models/tagListModel';
+
+
     @Component({
         components: {
             FromItem,
             DefaultBtn
+        },
+        computed: {
+            
         }
     })
     export default class EditLabel extends Vue {
-
         tag: tag = {
             id: '',
             name: ''
         };
- 
+        get tagList() {
+            return this.$store.state.tagList.tagList;
+        }
         created() {
             const id = this.$route.params.id
-            const tags = window.tagList;
-            const tag = tags.find(item => item.id === id)
+            const tag = this.tagList.find((item: tag) => item.id === id)
             if (tag) {
                 this.tag = tag
             } else {
@@ -51,13 +55,13 @@
 
         updateTag(name: string) {
             if (this.tag) {
-                tagListModel.update(this.tag.id, name)
+                this.$store.dispatch('updateTag_actions', {id: this.tag.id, name})
             }
         }
 
         deleteTag() {
             if (this.tag) {
-                tagListModel.remove(this.tag.id)
+                this.$store.dispatch('removeTag_actions', this.tag.id)
                 this.goBack()
             }
         }
