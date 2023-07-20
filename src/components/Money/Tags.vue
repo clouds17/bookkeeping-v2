@@ -28,9 +28,7 @@
             return this.$store.state.tagList.tagList;
         }
 
-        created() {
-            this.$store.commit('fetchTag')
-        }
+        
 
         taggle(tag: tag) {
             const index = this.selectdTags.indexOf(tag)

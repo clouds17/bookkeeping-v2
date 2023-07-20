@@ -1,16 +1,12 @@
 <template>
-    <div>
-        <ul class="types">
-            <li 
-                :class="value === '-' && 'selected'"
-                @click="selectType('-')"    
-            >支出</li>
-            <li 
-                :class="value === '+' && 'selected'"
-                @click="selectType('+')"    
-            >收入</li>
-        </ul>
-    </div>
+    <ul class="tabs">
+        <li 
+            v-for="item in dataSource"
+            :key="item.type"
+            :class="{[classPrefix+'-item']: classPrefix,selected: activeTab === item.type}"
+            @click="selectType(item.type)"    
+        >{{item.text}}</li>
+    </ul>
 </template>
 
 <script lang="ts">
@@ -18,22 +14,32 @@
 
     import { Vue, Component, Prop } from 'vue-property-decorator'
 
+
+    type DataSourceItem = {
+        text: string,
+        type: string
+    }
+
     @Component
-    export default class Types extends Vue {
-        @Prop() readonly value!: string;
+    export default class Tabs extends Vue {
+        @Prop({required: true, type: Array})
+            dataSource!: DataSourceItem[];
+
+        @Prop(String) 
+            readonly activeTab!: string;
+            
+        @Prop(String) 
+            classPrefix?: string;
        
         selectType(type: string) {
-            if (type !== '-' && type !== '+') { 
-                throw new Error('Type is unknown')
-            }
-            this.$emit('update:value', type)
+            this.$emit('update:active-tab', type)
         }
 
     }
 </script>
 
 <style lang="scss" scoped>
-.types {
+.tabs {
     background-color: #c4c4c4;
     display: flex;
     align-items: center;
@@ -46,7 +52,7 @@
         justify-content: center;
         position: relative;
 
-        &:nth-of-type(1)::before {
+        &::before {
             content: "";
             position: absolute;
             width: 1px;
@@ -55,6 +61,9 @@
             bottom: 15px;
             background: #a09b9b;
             z-index: 9;
+        }
+        &:last-child::before {
+            display: none;
         }
 
         &.selected::after {

@@ -19,10 +19,10 @@
 </template>
 
 <script lang="ts">
-    import { Vue, Component } from 'vue-property-decorator';
+    import { Vue, Component, Mixins } from 'vue-property-decorator';
     import FromItem from '@/components/Money/FromItem.vue';
     import DefaultBtn from '@/components/DefaultBtn.vue';
-
+    import CommonMixins from "@/mixins/mixin";
 
 
     @Component({
@@ -30,11 +30,8 @@
             FromItem,
             DefaultBtn
         },
-        computed: {
-            
-        }
     })
-    export default class EditLabel extends Vue {
+    export default class EditLabel extends Mixins(CommonMixins) {
         tag: tag = {
             id: '',
             name: ''
@@ -43,6 +40,7 @@
             return this.$store.state.tagList.tagList;
         }
         created() {
+
             const id = this.$route.params.id
             const tag = this.tagList.find((item: tag) => item.id === id)
             if (tag) {

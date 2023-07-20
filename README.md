@@ -353,3 +353,36 @@ export default class Labels extends Mixins(CommonMixins) {
 }
 ```
 
+
+
+五、vue中css的deep语法
+
+- vue中的style加上了scoped说明了这个.vue文件的css文件和其他的css互不影响，那如果父组件想要改子组件里面的样式怎么办呢？
+
+- vue提供了deep语法
+
+```
+//fater文件
+// child子组件里有两个li
+<template>
+	<child class="childContainer"></child>
+</template>
+<style scoped>
+	// 这样改是无效的
+	.childContainer li {
+		border: 1px solod red;
+	}
+	// 使用deep
+	.childContainer /deep/ li {
+		border: 1px solod red;
+	}
+</style>
+// 使用scss时它不认识 /deep/ ，会报错
+// 使用::v-deep
+<style scoped lang="scss">
+	.childContainer ::v-deep li {
+		border: 1px solod red;
+	}
+</style>
+```
+

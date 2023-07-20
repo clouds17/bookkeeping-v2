@@ -6,7 +6,10 @@
             placeholder="在这里输入备注"
             :value.sync="record.notes"
         ></FromItem>
-        <types :value.sync="record.type"></types>
+        <Tabs 
+            :active-tab.sync="record.type" 
+            :data-source="tabData"
+        ></Tabs>
         <number-pad :value.sync="record.amount" @submit="savaRecord"></number-pad>
         
         
@@ -16,7 +19,7 @@
 <script lang="ts">
 import Tags from '@/components/Money/Tags.vue';
 import FromItem from '@/components/Money/FromItem.vue';
-import Types from '@/components/Money/Types.vue';
+import Tabs from '@/components/Tabs.vue';
 import NumberPad from '@/components/Money/NumberPad.vue';
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import { mapState, mapMutations, mapActions } from 'vuex';
@@ -26,7 +29,7 @@ import { mapState, mapMutations, mapActions } from 'vuex';
     components: {
         Tags,
         FromItem,
-        Types,
+        Tabs,
         NumberPad
     },
     
@@ -39,6 +42,10 @@ export default class Money extends Vue{
         amount: 0,
         createdAt: new Date()
     }
+    tabData = [
+        { text: '支出', type: '-' },
+        { text: '手入', type: '+' }
+    ]
     created() {
         this.$store.commit('fetchRecord')
     }

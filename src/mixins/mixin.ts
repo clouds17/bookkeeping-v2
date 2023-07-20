@@ -2,6 +2,9 @@ import store from "@/store";
 import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class CommonMixins extends Vue{
+    created() {
+        store.commit('fetchTag')
+    }
     createTag() {
         const name = window.prompt('请输入标签名');
         if (name === null) return
