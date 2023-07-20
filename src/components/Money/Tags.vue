@@ -19,8 +19,7 @@
     import tagListModel from '@/models/tagListModel';
     @Component
     export default class Tags extends Vue {
-        // readonly: 只读
-        @Prop(Array) readonly dataSource: tag[] | undefined;
+        dataSource = window.tagList;
         selectdTags: tag[] = [];
 
         taggle(tag: tag) {

@@ -37,8 +37,7 @@
             if (name === '') {
              window.alert('标签名不能为空');
             } else {
-                console.log(this.tagList)
-                tagListModel.create(name!);
+                window.createTag(name)
             }
         }
 

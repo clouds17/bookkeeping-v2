@@ -1,6 +1,6 @@
 <template>
     <layout-wrapper class-prefix="layout">
-        <tags :data-source.sync="dataSource"  @update:value="onUpdateTags"></tags>
+        <tags  @update:value="onUpdateTags"></tags>
         <FromItem 
             field-name="备注" 
             placeholder="在这里输入备注"
@@ -20,7 +20,6 @@ import Types from '@/components/Money/Types.vue';
 import NumberPad from '@/components/Money/NumberPad.vue';
 import { Vue, Component, Watch } from 'vue-property-decorator';
 import recordListModel from '@/models/recordListModel';
-import tagListModel from '@/models/tagListModel';
 
 const recordList = recordListModel.fetch();
 
@@ -33,7 +32,6 @@ const recordList = recordListModel.fetch();
     }
 })
 export default class Money extends Vue{
-    dataSource = window.tagList;
     recordList = recordList;
     record: RecordItem = {
         tags: [],

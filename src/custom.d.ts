@@ -17,9 +17,10 @@ type TagListType = {
     create: (name: string) => string,
     update: (id: string, name: string) => string,
     save: () => void,
-    remove: (id: string) => boolean
+    remove: (id: string) => boolean 
 }
 
 interface Window {
-    tagList: tag[]
+    tagList: tag[],
+    createTag: (name: string) => void;
 }
