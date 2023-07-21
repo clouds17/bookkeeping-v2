@@ -2,11 +2,20 @@ import createId from '@/lib/createId';
 
 export default {
     state: {
-        tagList: [] as tag[]
+        tagList: [
+            { id: '9999',  name: '餐饮' },
+            { id: '9998',  name: '零食' },
+            { id: '9997',  name: '爱好' },
+            { id: '9996',  name: '交通' },
+            { id: '9995',  name: '日用品' },
+            { id: '9994',  name: '社交' },
+        ] as tag[]
     },
     mutations: {
         fetchTag(state: any) {
-            state.tagList = JSON.parse(window.localStorage.getItem('tagList') || '[]') || [];
+            
+            state.tagList = JSON.parse(window.localStorage.getItem('tagList') || JSON.stringify(state.tagList)) || state.tagList;
+            
         },
         saveTag(state: any) {
             window.localStorage.setItem('tagList', JSON.stringify(state.tagList));

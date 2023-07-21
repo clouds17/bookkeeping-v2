@@ -44,12 +44,12 @@ export default class Money extends Vue{
     }
     tabData = [
         { text: '支出', type: '-' },
-        { text: '手入', type: '+' }
+        { text: '收入', type: '+' }
     ]
     created() {
         this.$store.commit('fetchRecord')
     }
-    onUpdateTags(value: string[]) {
+    onUpdateTags(value: tag[]) {
         this.record.tags = value;
     }
     onUpdateNotes(value: string) {
@@ -57,6 +57,8 @@ export default class Money extends Vue{
     }
     savaRecord() {
         this.$store.dispatch('createRecord_actions', this.record)
+        Vue.prototype.$bus.$emit('clearSlectd')
+        window.alert('添加成功')
         this.record = {
             tags: [],
             notes: '',

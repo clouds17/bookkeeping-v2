@@ -10,7 +10,8 @@ Vue.config.productionTip = false
 
 Vue.component('LayoutWrapper', LayoutWrapper)
 Vue.component('SvgIcon', SvgIcon)
-
+const bus = new Vue()
+Vue.prototype.$bus = bus
 
 new Vue({
   router,

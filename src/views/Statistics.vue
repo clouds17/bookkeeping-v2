@@ -5,20 +5,23 @@
             classPrefix="nav"
             :data-source="navData"
         ></Tabs>
-        <Tabs 
+        <!-- <Tabs 
             :active-tab.sync="timeTab" 
             classPrefix="time"
             :data-source="timeData"
-        ></Tabs>
+        ></Tabs> -->
 
         <div>
             <ol>
                 <li v-for="(group, index) in resultList" :key="index">
-                    <h3 class="title">{{ group.title }}</h3>
+                    <h3 class="title"><p>{{ formatDate(group.title) }}</p><span>￥{{ group.total }}</span></h3>
                     <ol>
-                        <li class="record" v-for="(item, index2) in group.items" :key="index2">
+                        <li class="record" 
+                            v-for="(item, index2) in group.items" 
+                            :key="index2"
+                        >
                             <p><span class="tags">{{ tagString(item.tags) }}</span> <span class="notes">{{ item.notes }}</span></p>
-                            <p><span>￥</span><span class="amount">{{ item.amount }}</span></p>
+                            <p><span class="amount">{{ navTab }}{{ item.amount }}</span></p>
                             
                         </li>
                     </ol>
@@ -31,6 +34,19 @@
 <script lang="ts">
     import { Component, Vue } from 'vue-property-decorator';
     import Tabs from '../components/Tabs.vue';
+    import dayjs from 'dayjs';
+    import relativeTime from 'dayjs/plugin/relativeTime';
+    import isToday from 'dayjs/plugin/isToday';
+    import isoWeek from 'dayjs/plugin/isoWeek';
+    import zhCn from 'dayjs/locale/zh-cn';
+    import clone from '@/lib/clone';
+    dayjs.extend(relativeTime)
+    dayjs.extend(isToday)
+    dayjs.extend(isoWeek)
+    dayjs.locale(zhCn)
+    window.dayjs = dayjs
+
+
     @Component({
         components: {
             Tabs
@@ -40,7 +56,7 @@
         navTab = "-";
         navData = [
             { text: '支出', type: '-' },
-            { text: '手入', type: '+' }
+            { text: '收入', type: '+' }
         ]
         timeTab = "day";
         timeData = [
@@ -55,17 +71,34 @@
 
         get resultList() {
             const { recordList } = this
+            if (recordList.length === 0) { return []; }
+
             type HashValue = {
                 title: string,
-                items: RecordItem[]
+                items: RecordItem[],
+                total?: number
             }
-
-            const hashTable: {[key: string]: HashValue} = {}
-            for (let i = 0; i < recordList.length; i++) {
-                const [data, time] = recordList[i].createdAt.split('T');
-                hashTable[data] = hashTable[data] || {title: data, items: []}
-                hashTable[data].items.push(recordList[i])
+            const newList = clone(recordList).filter((v:RecordItem) => v.type === this.navTab).sort((a:any, b:any) => {
+                return new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime() ? -1 : 1;
+            })
+            const hashTable: HashValue[] = []
+            for ( let i = 0; i < newList.length; i++ ) {
+                const [date, time] = newList[i].createdAt.split('T')
+                const index  = hashTable.findIndex((table:HashValue) => table.title === date)
+                if (index !== -1) {
+                    hashTable[index].items.push(newList[i])
+                } else {
+                    hashTable.push({
+                        title: date,
+                        items: [newList[i]]
+                    })
+                }
+                
             }
+            console.log('hashTable', hashTable)
+            hashTable.forEach(group => {
+                group.total = group.items.reduce((sum, item) => sum + (item.amount - 0), 0)
+            })
             return hashTable;
         }
 
@@ -78,6 +111,48 @@
                 return '未知'
             } else {
                 return tag.map(item => item.name).join()
+            }
+        }
+
+        formatDate(date: string) {
+            let type = this.timeTab
+            console.log(date, type)
+
+            if (type === 'day') {
+                if (dayjs(date).isToday()) {
+                    return '今天'
+                } else if (dayjs(date).add(1, 'day').isToday()) {
+                    return '昨天'
+                } else if (dayjs(date).add(2, 'day').isToday()) {
+                    return '前天'
+                } else {
+                    return dayjs().to(dayjs(date));
+                }
+            } else if (type === 'week') {
+                let diffNum = dayjs().isoWeek() - dayjs(date).isoWeek()
+                console.log(date, type, diffNum)
+
+                if ( diffNum > 0) {
+                    return diffNum + '周前'
+                } else {
+                    return '这周'
+                }
+            } else if (type === 'month') {
+                let diffYear = new Date().getFullYear() - new Date(date).getFullYear()
+                let diffMonth = new Date().getMonth() - new Date(date).getMonth()
+                if (diffYear > 0) {
+                    if (diffMonth > 0) {
+                        return diffYear * 12 + diffMonth + '个月前'
+                    } else {
+                        return diffYear * 12 + diffMonth + '个月前'
+                    }
+                } else {
+                    if (diffMonth > 0) {
+                        return diffMonth + '个月前'
+                    } else {
+                        return '这个月'
+                    }
+                }
             }
         }
 
@@ -122,6 +197,11 @@
 
 .title {
     @extend %item;
+    > span {
+        font-size: 18px;
+        font-weight: bold;
+        color: #0758abad;
+    }
 }
 .record {
     background-color: #fff;

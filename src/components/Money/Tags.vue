@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-    import { Component, Prop, Mixins } from 'vue-property-decorator';
+    import { Component, Prop, Mixins, Vue, Emit} from 'vue-property-decorator';
     import CommonMixins from "@/mixins/mixin";
     @Component({
         computed: {
@@ -27,8 +27,12 @@
         get tagList() {
             return this.$store.state.tagList.tagList;
         }
-
-        
+        created() {
+            Vue.prototype.$bus.$on('clearSlectd', () => {
+                console.log('执行了这里')
+                this.selectdTags = []
+            })
+        }
 
         taggle(tag: tag) {
             const index = this.selectdTags.indexOf(tag)

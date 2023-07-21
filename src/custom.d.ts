@@ -1,5 +1,5 @@
 type RecordItem = {
-    tags: string[],
+    tags: tag[],
     notes: string,
     type: string,
     amount: number,
@@ -25,6 +25,7 @@ type state = {
 }
 
 interface Window {
-    tagList: tag[],
+    tagList: tag[];
     createTag: (name: string) => void;
+    dayjs: any;
 }
