@@ -55,6 +55,7 @@
     flex-direction: column;
     justify-content: flex-end;
     overflow: hidden;
+    background-color: #fff;
     > .current {
         display: flex;
         flex-wrap: wrap;

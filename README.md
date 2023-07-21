@@ -386,3 +386,11 @@ export default class Labels extends Mixins(CommonMixins) {
 </style>
 ```
 
+
+
+六、渲染Date的库
+
+- moment.js
+  - 缺点：16K体积太大
+- day.js
+  - momen.js的缩略版，2K（用它）
