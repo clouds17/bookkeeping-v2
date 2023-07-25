@@ -29,6 +29,10 @@ const routes: Array<RouteConfig> = [
     component: () => import('@/views/Statistics.vue')
   },
   {
+    path: '/iconpage',
+    component: () => import('@/views/IconPage.vue')
+  },
+  {
     path: '*',
     component: () => import('@/views/NotFound.vue')
   }

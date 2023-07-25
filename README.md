@@ -394,3 +394,4 @@ export default class Labels extends Mixins(CommonMixins) {
   - 缺点：16K体积太大
 - day.js
   - momen.js的缩略版，2K（用它）
+

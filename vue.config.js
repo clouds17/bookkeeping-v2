@@ -1,6 +1,10 @@
 /* eslint-disable */ 
 const path = require('path')
+
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/bookking-v2-views/'
+    : '/',
   lintOnSave: false,
   
   chainWebpack: config => {

@@ -8,17 +8,11 @@ type RecordItem = {
 
 type tag = {
     id: string
-    name: string
+    name: string,
+    pic?: string
 }
 
-type TagListType = {
-    data: tag[],
-    fetch: () => tag[],
-    create: (name: string) => string,
-    update: (id: string, name: string) => string,
-    save: () => void,
-    remove: (id: string) => boolean 
-}
+
 
 type state = {
     recordList: RecordItem[]

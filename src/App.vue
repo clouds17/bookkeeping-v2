@@ -8,7 +8,7 @@
 @import '~@/assets/style/reset.scss';
 @import '~@/assets/style/helper.scss';
 body {
-  background-color: #f5f5f5;
+  background-color: #333;
 
 }
 #app {
@@ -18,6 +18,11 @@ body {
   font-size: 15px;
   font-family: $font-kai;
   color: #333;
+  background-color: #f5f5f5;
+  max-width: 480px;
+  width: 100%;
+  margin: 0 auto;
+
 }
 
 

@@ -10,9 +10,8 @@
             classPrefix="time"
             :data-source="timeData"
         ></Tabs> -->
-
         <div>
-            <ol>
+            <ol v-if="resultList.length !== 0">
                 <li v-for="(group, index) in resultList" :key="index">
                     <h3 class="title"><p>{{ formatDate(group.title) }}</p><span>￥{{ group.total }}</span></h3>
                     <ol>
@@ -27,6 +26,9 @@
                     </ol>
                 </li>
             </ol>
+            <div v-else>
+                <p class="not-found">{{ noRecordedText }}</p>
+            </div>
         </div>
     </layout-wrapper>
 </template>
@@ -64,6 +66,9 @@
             { text: '按周', type: 'week' },
             { text: '按月', type: 'month' }
         ]
+        get noRecordedText() {
+            return this.navTab === '-' ? '当前还没有支出记录' : '当前还没有收入记录'
+        }
 
         get recordList() {
             return this.$store.state.recordList.recordList;
@@ -78,9 +83,12 @@
                 items: RecordItem[],
                 total?: number
             }
-            const newList = clone(recordList).filter((v:RecordItem) => v.type === this.navTab).sort((a:any, b:any) => {
-                return new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime() ? -1 : 1;
-            })
+            const newList = clone(recordList)
+                .filter((v:RecordItem) => v.type === this.navTab)
+                .sort((a:any, b:any) => { return new Date(a.createdAt).getTime() > new Date(b.createdAt).getTime() ? -1 : 1;})
+
+            if (newList.length === 0) { return []; }
+
             const hashTable: HashValue[] = []
             for ( let i = 0; i < newList.length; i++ ) {
                 const [date, time] = newList[i].createdAt.split('T')
@@ -239,5 +247,12 @@
     }
 
     
+}
+
+.not-found {
+    margin-top: 150px;
+    font-size: 30px;
+    text-align: center;
+    color: #cdcdcd;
 }
 </style>

@@ -78,6 +78,7 @@
         font-family: Consolas, monospace;
         padding: 9px 16px;
         text-align: right;
+        line-height: 1.2;
     }
     .buttons {
         @extend %clearFix;
@@ -85,10 +86,10 @@
             width: 25%;
             font-family: monospace;
             float: left;
-            height: 64px;
+            height: 60px;
             border: 1px solid #eee;
             &.ok {
-                height: 64 * 2px;
+                height: 60 * 2px;
                 float: right;
             }
             &.zero {

@@ -1,13 +1,21 @@
 <template>
     <div class="tags">
-        <ul class="current">
-            <li 
-                v-for="(tag, index) in tagList" 
-                :key="index"
-                :class="selectdTags.includes(tag) && 'selectd'"
-                @click="taggle(tag)"
-                >{{ tag.name }}</li>
-        </ul>
+        <div class="current">
+            <section v-for="(item, index) in tagList" :key="index">
+                <p>{{ item.classify }}</p>
+                <ul >
+                    <li 
+                        v-for="(tag, index2) in item.tags" 
+                        :key="index2"
+                        :class="selectdTags.includes(tag) && 'selectd'"
+                        @click="taggle(tag)"
+                        >
+                        <img :src="tag.pic" alt="">
+                        <p>{{ tag.name }}</p>
+                    </li>
+                </ul>
+            </section>
+        </div>
         <div class="new">
             <button @click="createTag">新增标签</button>
         </div>
@@ -27,13 +35,16 @@
         get tagList() {
             return this.$store.state.tagList.tagList;
         }
+        get img_url() {
+            return this.$store.state.tagList.img_url;
+        }
         created() {
+            console.log('img_url', Vue.prototype.$base_img)
             Vue.prototype.$bus.$on('clearSlectd', () => {
                 console.log('执行了这里')
                 this.selectdTags = []
             })
         }
-
         taggle(tag: tag) {
             const index = this.selectdTags.indexOf(tag)
             if (index > -1) {
@@ -62,23 +73,39 @@
     background-color: #fff;
     > .current {
         display: flex;
-        flex-wrap: wrap;
         overflow: auto;
-        > li {
-            background: #edebeb;
-            $h: 24px;
-            height: $h;
-            line-height: $h;
-            border-radius: ($h / 2);
-            padding: 0 15px;
-            margin-right: 10px;
-            margin-bottom: 10px;
+        flex-direction: column;
+        > section {
+            margin-bottom: 15px;
+            > ul {
+                display: flex;
+                flex-wrap: wrap;
+                > li {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    margin-right: 10px;
+                    margin-bottom: 10px;
+                    padding: 8px 15px;
+                    border-radius: 15px;
+                    
+                    > img {
+                        max-height: 35px;
+                        max-width: 35px;
+                    }
+                    > p {
+                        font-size: 13px;
+                        margin-top: 2px;
+                    }
 
-            &.selectd {
-                background: $color-highlight;
-                color: #fff;
+                    &.selectd {
+                        background: $color-highlight;
+                        color: #fff;
+                    }
+                }
             }
         }
+        
     }
 
     > .new {

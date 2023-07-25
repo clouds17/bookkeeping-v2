@@ -47,6 +47,7 @@ export default class Money extends Vue{
         { text: '收入', type: '+' }
     ]
     created() {
+       
         this.$store.commit('fetchRecord')
     }
     onUpdateTags(value: tag[]) {
@@ -56,6 +57,9 @@ export default class Money extends Vue{
         this.record.notes = value;
     }
     savaRecord() {
+        if (!this.record.tags || this.record.tags.length == 0) {
+            return window.alert('请至少选择一个标签')
+        }
         this.$store.dispatch('createRecord_actions', this.record)
         Vue.prototype.$bus.$emit('clearSlectd')
         window.alert('添加成功')
